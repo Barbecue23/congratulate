@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import styles from './Envelope.module.css';
+import styles from './Envelope.module.css'; // ตรวจสอบการนำเข้า
 
 const Envelope = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +19,18 @@ const Envelope = () => {
     }
   };
 
+  const handleCloseEnvelope = (e: React.MouseEvent) => {
+    if (!e.target.closest(`.${styles.envelope}`)) {
+      // ปิดซองเมื่อคลิกที่พื้นที่ว่าง
+      setIsOpen(false);
+      setIsPopped(false);
+    }
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleCloseEnvelope}>
       <div
-        className={`${styles.envelope} ${isOpen ? styles.open : ''} ${isPopped ? styles.popEffect : ''}`}
+        className={`${styles.envelope} ${isOpen ? styles.open : ''}`}
         onClick={handleOpenEnvelope}
       >
         <div className={styles.flap}></div>
@@ -31,8 +39,28 @@ const Envelope = () => {
 
       {/* กระดาษข้อความ */}
       <div className={`${styles.paper} ${isOpen ? styles.show : ''}`}>
-        ยินดีด้วยนะ! 🎉 คุณจบการศึกษาแล้ว!
+        <p>ยินดีด้วยนะ! 🎉</p>
+        <br />
+        <p>คุณจบการศึกษาแล้ว!</p>
       </div>
+
+      {/* สี่เหลี่ยมหลายสีที่กระจายออกไป */}
+      {isPopped && (
+        <div className={styles.particles}>
+          {Array.from({ length: 20 }).map((_, index) => (
+            <div
+              key={index}
+              className={styles.particle}
+              style={{
+                top: `${Math.random() * 80}%`, // สุ่มตำแหน่งบน-ล่าง
+                left: `${Math.random() * 80}%`, // สุ่มตำแหน่งซ้าย-ขวา
+                animationDelay: `${Math.random() * 0.5}s`, // สุ่มเวลาเริ่มแอนิเมชัน
+                backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`, // สีสุ่ม
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
