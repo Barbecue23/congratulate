@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  background-color: #f7f5f2;
+}
+
+/* ซองจดหมาย */
+.envelope {
+  width: 260px;
+  height: 160px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  perspective: 1000px; /* ทำให้เอฟเฟกต์เปิดดูสมจริง */
+}
+
+/* ฝาซอง */
+.flap {
+  width: 100%;
+  height: 80px;
+  background-color: #e0ac69; /* สีทอง */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top;
+  transform: rotateX(0deg); /* เริ่มต้นปิดสนิท */
+  transition: transform 0.6s ease-in-out;
+  border-radius: 10px 10px 0 0;
+  z-index: 2;
+}
+
+/* ตัวซอง */
+.body {
+  width: 260px;
+  height: 160px;
+  background-color: #f4d29f; /* สีทองอ่อน */
+  position: absolute;
+  bottom: 0;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* เอฟเฟกต์เปิดฝาซองขึ้น */
+.open .flap {
+  transform: rotateX(160deg); /* เปิดขึ้น */
+}
+
+/* กระดาษข้อความ */
+.paper {
+  position: absolute;
+  width: 220px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  opacity: 0;
+  bottom: 0;
+  transform: translateY(20px) scale(0.8); /* เริ่มจากเล็กกว่าปกติ */
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out;
+}
+
+/* แสดงกระดาษพร้อมเอฟเฟกต์เด้ง */
+.show {
+  opacity: 1;
+  transform: translateY(-50px) scale(1); /* เด้งขยายขึ้น */
+}
+
+/* เอฟเฟกต์พุ่งตอนเปิด */
+.pop-effect {
+  animation: popUp 0.4s ease-out;
+}
+
+@keyframes popUp {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* ขยายขึ้นเล็กน้อย */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
