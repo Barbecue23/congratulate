@@ -20,7 +20,7 @@ const Envelope = () => {
   };
 
   const handleCloseEnvelope = (e: React.MouseEvent) => {
-    if (!e.target.closest(`.${styles.envelope}`)) {
+    if (!(e.target as HTMLElement).closest(`.${styles.envelope}`)) {
       // ปิดซองเมื่อคลิกที่พื้นที่ว่าง
       setIsOpen(false);
       setIsPopped(false);
